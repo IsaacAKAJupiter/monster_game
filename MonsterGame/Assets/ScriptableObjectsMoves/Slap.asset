@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9645d02697bc5e34ba3e324e867e82e8, type: 3}
+  m_Name: Slap
+  m_EditorClassIdentifier: 
+  name: Slap
+  id: 1
+  damage: 1
+  accuracy: 90
+  materials: 01000000000000000000000000000000
+  sprite: {fileID: 21300000, guid: 50b542ff520379547b0130068e78c0b2, type: 3}
+  expGiven: 5
+  description: 'Slap is the first move that you can craft. This move is a simple move
+    that slaps the opponent on use.
+
+
+    This is a low level move that doesn''t do much damage.'

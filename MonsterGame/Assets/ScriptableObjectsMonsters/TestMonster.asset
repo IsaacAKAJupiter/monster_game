@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 331c5660e361eb047b161161e5b49664, type: 3}
+  m_Name: TestMonster
+  m_EditorClassIdentifier: 
+  name: Test Monster
+  type: Grass
+  defence: 1
+  attack: 1
+  speed: 1
+  health: 10
+  id: 1
+  maxHealth: 10
+  baseExpMultiplier: 1000
+  CraftingMaterialsT1: 0000000001000000
+  CraftingMaterialsT2: 0000000000000000
+  CraftingMaterialsT3: 0000000000000000
+  CraftingMaterialsT4: 0000000000000000
+  MonstersLearnableMoves:
+  - learnableMoves: {fileID: 11400000, guid: e4b91c87819bdee4f845003ec01e7b47, type: 2}
+    moveLevelLearned: 1
+  - learnableMoves: {fileID: 11400000, guid: 84fce94665744ba40b13d0701be03171, type: 2}
+    moveLevelLearned: 2
+  - learnableMoves: {fileID: 11400000, guid: 46e3b4c230b88634eb90600bc4579742, type: 2}
+    moveLevelLearned: 3
+  - learnableMoves: {fileID: 11400000, guid: 008aaeffb68d02442bba3b122b3ec77e, type: 2}
+    moveLevelLearned: 4
+  MonstersDropTable:
+  - drop: {fileID: 11400000, guid: 7029b1e2d6bfe2945a17ebf848fd6e0f, type: 2}
+    percentageChance: 100
+    amountDropped: 1
+  sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  model: {fileID: 100002, guid: d0d2266e73cffc0458561b3437861514, type: 3}
+  description: 'This is a test monster.
+
+
+    Testing Line Breaks
+
+
+    YUH'

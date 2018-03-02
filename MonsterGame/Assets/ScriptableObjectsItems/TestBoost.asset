@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8caecdd422a18584dbc32d706330bb1e, type: 3}
+  m_Name: TestBoost
+  m_EditorClassIdentifier: 
+  name: Test Boost
+  description: 'This is the first Boost in the game, just here for testing.
+
+
+    This will boost in the Health stat.'
+  id: 2
+  sellPrice: 2
+  buyPrice: 6
+  sprite: {fileID: 21300000, guid: eb2dc473767195d4ea44c9d11303353c, type: 3}
+  type: 2
+  healAmount: 0
+  healsPoison: 0
+  stopsBleeding: 0
+  boostAmount: 110
+  boostAttack: 1
+  boostSpeed: 0
+  boostDefence: 0
+  boostHealth: 0
+  boostLength: 4
+  expGiven: 10
+  materials: 01000000000000000000000000000000

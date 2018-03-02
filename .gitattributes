@@ -1,0 +1,6 @@
+*.controller -diff
+*.meta -diff
+*.mat -diff
+*.obj -diff
+*.asset -diff
+*.unity -diff

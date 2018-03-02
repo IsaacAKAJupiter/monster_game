@@ -528,6 +528,7 @@ public class PlayerScript : MonoBehaviour
             ReplacingPlayerMonsterMoveUIInventory.SetActive(false);
             ReplacingPlayerMonsterMoveUIInventoryLeft.SetActive(false);
             this.PlayerInventoryUpdate("Inventory");
+            StaticClasses.UIIsOpen = false;
         }
     }
 

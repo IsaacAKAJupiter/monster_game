@@ -61,7 +61,7 @@ ModelImporter:
     400052: woman
     2100000: palettemat
     4300000: woman
-    7400000: mixamo.com
+    7400000: idle_woman_brunette1
     9500000: //RootNode
     13700000: woman
   externalObjects: {}
@@ -92,7 +92,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: mixamo.com
+      name: idle_woman_brunette1
       takeName: mixamo.com
       firstFrame: 0
       lastFrame: 499

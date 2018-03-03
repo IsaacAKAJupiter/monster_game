@@ -16,10 +16,12 @@ MonoBehaviour:
   description: This is the first quest.
   QuestRequirements: []
   SkillLevelRequirements: 0000000000000000
-  ItemAwards: []
-  ExpAwards: 0000000000000000
-  MaterialAwards: 00000000000000000000000000000000
+  ItemAwards:
+  - {fileID: 11400000, guid: 15ed06c1c638f2e42886e0bd743a1983, type: 2}
+  ExpAwards: 6400000064000000
+  MaterialAwards: 00000000000000000100000000000000
   MainQuest: 1
   IsStarted: 1
   IsCompleted: 1
   CurrentPart: 3
+  MaxParts: 0

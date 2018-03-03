@@ -29,6 +29,8 @@ public class CurrentActiveBattleBoosts
 public class BattleScript : MonoBehaviour {
 
     CurrentMonsterOnPlayer currentMonsterScript;
+    public GameObject BattleEventsUI;
+    private Text BattleEventsText;
     public GameObject Battle_UI;
     public GameObject BattleMenuBottom;
     public GameObject Health;
@@ -100,6 +102,8 @@ public class BattleScript : MonoBehaviour {
         ENEMY_MaxHealthText = ENEMY_MaxHealth.GetComponent<Text>();
         ENEMY_NameText = ENEMY_Name.GetComponent<Text>();
         ENEMY_SliderComponent = ENEMY_Slider.GetComponent<Slider>();
+
+        BattleEventsText = BattleEventsUI.transform.GetChild(1).GetComponent<Text>();
 
         playerScript = GetComponent<PlayerScript>();
 
@@ -223,6 +227,8 @@ public class BattleScript : MonoBehaviour {
         IsTurnToBattle = false;
 
         print("Using boost: " + playerScript.items[BoostID - 1].name + " with the id: " + playerScript.items[BoostID - 1].id);
+        BattleEventsUI.SetActive(true);
+        BattleEventsText.text = "Player used boost with ID: " + playerScript.items[BoostID - 1].id + " and name: " + playerScript.items[BoostID - 1].name + "!";
         float AttackBoost = 0;
         float DefenceBoost = 0;
         float SpeedBoost = 0;
@@ -246,7 +252,6 @@ public class BattleScript : MonoBehaviour {
         {
             print("This is a boost for health.");
             HealthBoost += playerScript.items[BoostID - 1].boostAmount;
-            //HealthText.transform.parent.transform.GetChild(7).GetComponent<Text>().text = this.HealthBoost.ToString();
         }
         //Adding boost struct to a list to try to allow slowly getting worse.
         CurrentActiveBattleBoosts boost = new CurrentActiveBattleBoosts(playerScript.items[BoostID - 1], playerScript.items[BoostID - 1].boostLength, playerScript.items[BoostID - 1].boostAmount, AttackBoost, DefenceBoost, SpeedBoost, HealthBoost);
@@ -302,6 +307,8 @@ public class BattleScript : MonoBehaviour {
         IsTurnToBattle = false;
 
         print("Using potion: " + playerScript.items[ItemID - 1].name + " with the id: " + playerScript.items[ItemID - 1].id);
+        BattleEventsUI.SetActive(true);
+        BattleEventsText.text = "Player used potion with ID: " + playerScript.items[ItemID - 1].id + " and name: " + playerScript.items[ItemID - 1].name + "!";
         print(Mathf.Clamp(currentMonsterScript.health + playerScript.items[ItemID - 1].healAmount, 1, currentMonsterScript.maxHealth));
         PotionChoicesPotions.transform.parent.gameObject.SetActive(false);
 
@@ -574,6 +581,9 @@ public class BattleScript : MonoBehaviour {
                 }
                 ENEMY_HealthText.text = ENEMY_Health_MONSTER.ToString();
 
+                BattleEventsUI.SetActive(true);
+                BattleEventsText.text = "Player hit " + ENEMY_Name_MONSTER + " with the move: " + currentMonsterScript.monsterMoves[MoveNumber].name + " for " + PlayerDamageToEnemy + " damage!";
+
                 for (float i = 0.0f; i <= 1.0f; i += 0.001f)
                 {
                     if (ENEMY_SliderComponent.value < ENEMY_Health_MONSTER + 0.01f && ENEMY_SliderComponent.value > ENEMY_Health_MONSTER - 0.01f)
@@ -598,6 +608,8 @@ public class BattleScript : MonoBehaviour {
             } else
             {
                 print("Attack Missed!");
+                BattleEventsUI.SetActive(true);
+                BattleEventsText.text = "Player missed " + ENEMY_Name_MONSTER + " with the move: " + currentMonsterScript.monsterMoves[MoveNumber].name + "!";
             }
 
             yield return new WaitForSeconds(1.0f);
@@ -635,6 +647,8 @@ public class BattleScript : MonoBehaviour {
             {
                 int EnemyDamageToPlayer = Mathf.Clamp(Mathf.CeilToInt((float)(ENEMY_Attack_MONSTER * ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].damage) / (currentMonsterScript.defence + DefenceBoost)), 1, int.MaxValue);
                 print("ENEMY SHOULD DO THIS DAMAGE: " + EnemyDamageToPlayer + " | MOVE USED: " + ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].name);
+
+                BattleEventsText.text = "Enemy hit " + currentMonsterScript.name + " with the move: " + ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].name + " for " + EnemyDamageToPlayer + " damage!";
 
                 //Before updating the health, let's check if the player has any health boosts.
                 int LeftoverDamage = 0;
@@ -682,7 +696,6 @@ public class BattleScript : MonoBehaviour {
                         break;
                     }
                     SliderComponent.value = Mathf.Lerp(SliderComponent.value, currentMonsterScript.health, i);
-                    //print("i: " + i.ToString() + " | SliderValue: " + SliderComponent.value);
                     yield return new WaitForSeconds(0.01f);
                 }
                 print("Done Waiting: EnemyAttackingSecond");
@@ -697,6 +710,7 @@ public class BattleScript : MonoBehaviour {
             } else
             {
                 print("Attack Missed!");
+                BattleEventsText.text = "Enemy missed " + currentMonsterScript.name + " with the move: " + ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].name + "!";
             }
 
         } else if (WhoIsAttackingFirst == "Enemy")
@@ -734,6 +748,9 @@ public class BattleScript : MonoBehaviour {
             {
                 int EnemyDamageToPlayer = Mathf.Clamp((int)Mathf.Ceil((float)(ENEMY_Attack_MONSTER * ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].damage) / (currentMonsterScript.defence + DefenceBoost)), 1, int.MaxValue);
                 print("ENEMY SHOULD DO THIS DAMAGE: " + EnemyDamageToPlayer + " | MOVE USED: " + ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].name);
+
+                BattleEventsUI.SetActive(true);
+                BattleEventsText.text = "Enemy hit " + currentMonsterScript.name + " with the move: " + ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].name + " for " + EnemyDamageToPlayer + " damage!";
 
                 //Before updating the health, let's check if the player has any health boosts.
                 int LeftoverDamage = 0;
@@ -811,6 +828,8 @@ public class BattleScript : MonoBehaviour {
                     ENEMY_Health_MONSTER = 0;
                 }
                 ENEMY_HealthText.text = ENEMY_Health_MONSTER.ToString();
+
+                BattleEventsText.text = "Player hit " + ENEMY_Name_MONSTER + " with the move: " + currentMonsterScript.monsterMoves[MoveNumber].name + " for " + PlayerDamageToEnemy + " damage!";
 
                 for (float i = 0.0f; i <= 1.0f; i += 0.001f)
                 {
@@ -904,6 +923,7 @@ public class BattleScript : MonoBehaviour {
 
         //This is when all the attacking is done and neither of the monsters died, so I have to put the UI back on the screen.
         BattleMenuBottom.SetActive(true);
+        BattleEventsUI.SetActive(false);
         BattleMenuBottom.transform.GetChild(1).gameObject.SetActive(true);
         BattleMenuBottom.transform.GetChild(2).gameObject.SetActive(false);
         BattleMenuBottom.transform.GetChild(3).gameObject.SetActive(false);
@@ -975,6 +995,8 @@ public class BattleScript : MonoBehaviour {
         {
             int EnemyDamageToPlayer = Mathf.Clamp((int)Mathf.Ceil((float)(ENEMY_Attack_MONSTER * ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].damage) / (currentMonsterScript.defence + DefenceBoost)), 1, int.MaxValue);
             print("ENEMY SHOULD DO THIS DAMAGE: " + EnemyDamageToPlayer + " | MOVE USED: " + ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].name);
+
+            BattleEventsText.text = "Enemy hit " + currentMonsterScript.name + " with the move: " + ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].name + " for " + EnemyDamageToPlayer + " damage!";
 
             //Before updating the health, let's check if the player has any health boosts.
             int LeftoverDamage = 0;
@@ -1052,6 +1074,7 @@ public class BattleScript : MonoBehaviour {
         } else
         {
             print("Attack Missed!");
+            BattleEventsText.text = "Enemy missed " + currentMonsterScript.name + " with the move: " + ENEMY_Moves_MONSTER[EnemyRandomMoveNumber].name + "!";
         }
 
         //Recalculating all the values for the boosts.
@@ -1118,6 +1141,7 @@ public class BattleScript : MonoBehaviour {
         BattleAmountOfTurns++;
 
         BattleMenuBottom.SetActive(true);
+        BattleEventsUI.SetActive(false);
         BattleMenuBottom.transform.GetChild(1).gameObject.SetActive(true);
         BattleMenuBottom.transform.GetChild(2).gameObject.SetActive(false);
         BattleMenuBottom.transform.GetChild(3).gameObject.SetActive(false);
@@ -1141,12 +1165,15 @@ public class BattleScript : MonoBehaviour {
         } else
         {
             print("Couldn't escape.");
+            BattleEventsUI.SetActive(true);
+            BattleEventsText.text = "Player tried to run from " + ENEMY_Name_MONSTER + " but couldn't escape!";
             StartCoroutine(BattleJustEnemy((myReturnValue) => {
                 if (myReturnValue == true) {
                     //Ended battle.
                 } else
                 {
                     BattleMenuBottom.SetActive(true);
+                    BattleEventsUI.SetActive(false);
                     BattleMenuBottom.transform.GetChild(1).gameObject.SetActive(true);
                     BattleMenuBottom.transform.GetChild(2).gameObject.SetActive(false);
                     BattleMenuBottom.transform.GetChild(3).gameObject.SetActive(false);
@@ -1276,6 +1303,7 @@ public class BattleScript : MonoBehaviour {
         BattleAttackMove1Text.transform.parent.transform.parent.gameObject.SetActive(false);
         BattleAttackMove1Text.transform.parent.transform.parent.transform.parent.gameObject.SetActive(false);
         Battle_UI.SetActive(false);
+        BattleEventsUI.SetActive(false);
         ENEMY_Battle_UI.SetActive(false);
         currentActiveBattleBoosts.Clear();
         HealthText.transform.parent.transform.GetChild(7).GetComponent<Text>().text = "0";
@@ -1295,6 +1323,7 @@ public class BattleScript : MonoBehaviour {
         BattleAttackMove1Text.transform.parent.transform.parent.gameObject.SetActive(false);
         BattleAttackMove1Text.transform.parent.transform.parent.transform.parent.gameObject.SetActive(false);
         Battle_UI.SetActive(false);
+        BattleEventsUI.SetActive(false);
         ENEMY_Battle_UI.SetActive(false);
         currentActiveBattleBoosts.Clear();
         HealthText.transform.parent.transform.GetChild(7).GetComponent<Text>().text = "0";

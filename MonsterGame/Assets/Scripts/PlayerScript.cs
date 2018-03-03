@@ -36,6 +36,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject PauseMenuUI;
     public GameObject ShopUI;
     public GameObject DialogueUI;
+    public GameObject BattleEventsUI;
 
     public Button ExitMoveConstructingUIButton;
     public Button ExitPlayerInventoryUIButton;
@@ -113,6 +114,7 @@ public class PlayerScript : MonoBehaviour
         PauseMenuUI.SetActive(false);
         ShopUI.SetActive(false);
         DialogueUI.SetActive(false);
+        BattleEventsUI.SetActive(false);
       
         //Adding Listeners to Buttons.
         ExitMoveConstructingUIButton.onClick.AddListener(UIButtonExiterChangeToLockedCursor);
@@ -150,6 +152,16 @@ public class PlayerScript : MonoBehaviour
                     DialogueUI.SetActive(true);
                     this.ChangeMouseCursorMode(CursorLockMode.None);
                     InteractableUI.SetActive(false);
+                } else if (StaticClasses.WhatInteractableItem == "DoorOpen")
+                {
+                    Animator DoorAnimator = StaticClasses.WhatInteractableItemGO.transform.parent.parent.GetChild(3).GetComponent<Animator>();
+                    if (DoorAnimator.GetBool("IsOpen") == true)
+                    {
+                        DoorAnimator.SetBool("IsOpen", false);
+                    } else
+                    {
+                        DoorAnimator.SetBool("IsOpen", true);
+                    }
                 }
             }
         }
@@ -197,17 +209,19 @@ public class PlayerScript : MonoBehaviour
                 moveDirection.y = jumpMultiplier;
             }
 
+            Animator.SetBool("IsMoving", true);
+
             if (Input.GetKey(StaticClasses.SprintButton))
             {
                 moveDirection *= sprint;
                 moveDirection.y -= gravity * Time.deltaTime;
                 charController.Move(moveDirection * Time.deltaTime);
-                Animator.SetFloat("SpeedPercent", 1.7f, 0.1f, Time.deltaTime);
+                Animator.SetFloat("WalkRun", 5.0f, 0.1f, Time.deltaTime);
             }
 
             moveDirection.y -= gravity * Time.deltaTime;
             charController.Move(moveDirection * Time.deltaTime);
-            Animator.SetFloat("SpeedPercent", 0.5f, 0.1f, Time.deltaTime);
+            Animator.SetFloat("WalkRun", 0.0f, 0.1f, Time.deltaTime);
         }
 
         if (charController.velocity.magnitude > 0) {
@@ -219,7 +233,7 @@ public class PlayerScript : MonoBehaviour
 
         if (charController.velocity == Vector3.zero)
         {
-            Animator.SetFloat("SpeedPercent", -0.7f, 0.1f, Time.deltaTime);
+            Animator.SetBool("IsMoving", false);
         }
 
         //Dealing with the user pressing escape while playing.
@@ -430,7 +444,7 @@ public class PlayerScript : MonoBehaviour
         quests[id - 1].IsStarted = true;
         quests[id - 1].IsCompleted = true;
         print("Completing Quest with ID: " + id + " | This quest took " + quests[id - 1].CurrentPart + " parts to complete.");
-        this.GainQuestRewards(id - 1);
+        this.GainQuestRewards(id);
     }
 
     //This function is used to change the ItemID variable.
@@ -1165,7 +1179,58 @@ public class PlayerScript : MonoBehaviour
 
     public void GainQuestRewards(int id)
     {
-        print("Work on gaining rewards.");
+        print(quests[id - 1]);
+        for (int i = 0; i < quests[id - 1].ItemAwards.Count; i++)
+        {
+            if (quests[id - 1].ItemAwards[i].type == DropDownItem.boost)
+            {
+                if (playerInventory.itemsBoosts.Count < playerInventory.MaxSpace)
+                {
+                    print("Adding a boost to your inventory.");
+                    playerInventory.itemsBoosts.Add(quests[id - 1].ItemAwards[i]);
+                }
+                else
+                {
+                    print("Your item inventory is full!");
+                }
+            }
+            else if (quests[id - 1].ItemAwards[i].type == DropDownItem.potion)
+            {
+                if (playerInventory.itemsPotions.Count < playerInventory.MaxSpace)
+                {
+                    print("Adding a potion to your inventory.");
+                    playerInventory.itemsPotions.Add(quests[id - 1].ItemAwards[i]);
+                }
+                else
+                {
+                    print("Your item inventory is full!");
+                }
+            }
+            else if (quests[id - 1].ItemAwards[i].type == DropDownItem.item)
+            {
+                if (playerInventory.items.Count < playerInventory.MaxSpace)
+                {
+                    print("Adding an item to your inventory.");
+                    playerInventory.items.Add(quests[id - 1].ItemAwards[i]);
+                }
+                else
+                {
+                    print("Your item inventory is full!");
+                }
+            }
+            else
+            {
+                print("Something went wrong when trying to add item: " + quests[id - 1].ItemAwards[i].name + " to your inventory after a battle, item type is: " + quests[id - 1].ItemAwards[i].type);
+            }
+        }
+
+        playerStats.GainMoveConstructingExp(quests[id - 1].ExpAwards[0]);
+        playerStats.GainChemistryExp(quests[id - 1].ExpAwards[1]);
+
+        playerInventory.materials[0] += quests[id - 1].MaterialAwards[0];
+        playerInventory.materials[1] += quests[id - 1].MaterialAwards[1];
+        playerInventory.materials[2] += quests[id - 1].MaterialAwards[2];
+        playerInventory.materials[3] += quests[id - 1].MaterialAwards[3];
     }
 
     public void GainAchievement(int id)

@@ -154,13 +154,16 @@ public class PlayerScript : MonoBehaviour
                     InteractableUI.SetActive(false);
                 } else if (StaticClasses.WhatInteractableItem == "DoorOpen")
                 {
-                    Animator DoorAnimator = StaticClasses.WhatInteractableItemGO.transform.parent.parent.GetChild(3).GetComponent<Animator>();
-                    if (DoorAnimator.GetBool("IsOpen") == true)
+                    Animator DoorAnimator1 = StaticClasses.WhatInteractableItemGO.transform.parent.parent.GetChild(3).GetChild(0).GetComponent<Animator>();
+                    Animator DoorAnimator2 = StaticClasses.WhatInteractableItemGO.transform.parent.parent.GetChild(3).GetChild(1).GetComponent<Animator>();
+                    if (DoorAnimator1.GetBool("IsOpen") == true || DoorAnimator2.GetBool("IsOpen") == true)
                     {
-                        DoorAnimator.SetBool("IsOpen", false);
+                        DoorAnimator1.SetBool("IsOpen", false);
+                        DoorAnimator2.SetBool("IsOpen", false);
                     } else
                     {
-                        DoorAnimator.SetBool("IsOpen", true);
+                        DoorAnimator1.SetBool("IsOpen", true);
+                        DoorAnimator2.SetBool("IsOpen", true);
                     }
                 }
             }

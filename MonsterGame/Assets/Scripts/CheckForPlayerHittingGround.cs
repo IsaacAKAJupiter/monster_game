@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckForPlayerHittingGround : MonoBehaviour {
 
@@ -32,6 +33,7 @@ public class CheckForPlayerHittingGround : MonoBehaviour {
             StaticClasses.WhatInteractableItem = other.gameObject.transform.GetChild(0).tag;
             StaticClasses.WhatInteractableItemGO = other.gameObject;
             playerScript.InteractableUI.SetActive(true);
+            playerScript.InteractableUI.transform.GetChild(1).GetComponent<Text>().text = "Press " + StaticClasses.InteractableButton + " to interact.";
         } 
     }
 
@@ -89,7 +91,6 @@ public class CheckForPlayerHittingGround : MonoBehaviour {
                         }
                     } else
                     {
-                        print("test");
                         //Already in battle or monster is at no health.
                     }
                 }

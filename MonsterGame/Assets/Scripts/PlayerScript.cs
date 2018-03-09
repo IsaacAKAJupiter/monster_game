@@ -165,6 +165,16 @@ public class PlayerScript : MonoBehaviour
                         DoorAnimator1.SetBool("IsOpen", true);
                         DoorAnimator2.SetBool("IsOpen", true);
                     }
+                } else if (StaticClasses.WhatInteractableItem == "LampTrigger")
+                {
+                    GameObject LampOn = StaticClasses.WhatInteractableItemGO.transform.parent.parent.GetChild(1).gameObject;
+                    if (LampOn.activeSelf == true)
+                    {
+                        LampOn.SetActive(false);
+                    } else
+                    {
+                        LampOn.SetActive(true);
+                    }
                 }
             }
         }
@@ -239,7 +249,7 @@ public class PlayerScript : MonoBehaviour
             Animator.SetBool("IsMoving", false);
         }
 
-        //Dealing with the user pressing escape while playing.
+        //Dealing with the user pressing the pause button (usually escape) while playing.
         if (Input.GetKeyDown(StaticClasses.PauseButton) && StaticClasses.IsInBattle == false)
         {
             if (StaticClasses.IsGamePaused == false)
@@ -268,6 +278,38 @@ public class PlayerScript : MonoBehaviour
     private void OnGUI()
     {
         //Changing controls.
+        //Checking if its shift.
+        if (Event.current.shift && AssigningKey == true && WhichControl != null)
+        {
+            KeyCode WhichShift = KeyCode.None;
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                WhichShift = KeyCode.LeftShift;
+            } else if (Input.GetKey(KeyCode.RightShift))
+            {
+                WhichShift = KeyCode.RightShift;
+            }
+
+            if (StaticClasses.InteractableButton == WhichShift)
+            {
+                StaticClasses.InteractableButton = KeyCode.None;
+            }
+            else if (StaticClasses.InventoryButton == WhichShift)
+            {
+                StaticClasses.InventoryButton = KeyCode.None;
+            }
+            else if (StaticClasses.SprintButton == WhichShift)
+            {
+                StaticClasses.SprintButton = KeyCode.None;
+            }
+            else if (StaticClasses.JumpButton == WhichShift)
+            {
+                StaticClasses.JumpButton = KeyCode.None;
+            }
+            ActuallyChangingControl(WhichControl, WhichShift);
+        }
+
         if (Event.current.isKey && AssigningKey == true && WhichControl != null)
         {
             if (Event.current.keyCode != KeyCode.Escape)

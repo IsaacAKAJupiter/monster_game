@@ -19,6 +19,7 @@ TagManager:
   - ShopUITrigger
   - DialogueTrigger
   - DoorOpen
+  - LampTrigger
   layers:
   - Default
   - TransparentFX

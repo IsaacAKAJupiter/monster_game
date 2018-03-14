@@ -37,6 +37,9 @@ public class PlayerScript : MonoBehaviour
     public GameObject ShopUI;
     public GameObject DialogueUI;
     public GameObject BattleEventsUI;
+    public GameObject OtherEventsUI;
+
+    public Sprite QuestsIconSprite;
 
     public Button ExitMoveConstructingUIButton;
     public Button ExitPlayerInventoryUIButton;
@@ -115,6 +118,7 @@ public class PlayerScript : MonoBehaviour
         ShopUI.SetActive(false);
         DialogueUI.SetActive(false);
         BattleEventsUI.SetActive(false);
+        OtherEventsUI.SetActive(false);
       
         //Adding Listeners to Buttons.
         ExitMoveConstructingUIButton.onClick.AddListener(UIButtonExiterChangeToLockedCursor);
@@ -453,6 +457,12 @@ public class PlayerScript : MonoBehaviour
     //This function will deal with starting quests.
     public void StartQuest(int id)
     {
+        if (quests[id - 1].IsCompleted == true)
+        {
+            print("You've already completed this quest.");
+            return;
+        }
+
         if (quests[id - 1].MainQuest == true)
         {
             foreach (Quests quest in quests)
@@ -465,6 +475,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
         print("Starting Quest with ID: " + id);
+        StartCoroutine(OtherEventTextQuests("Started Quest: " + quests[id - 1].name + " | ID: " + id + "."));
         quests[id - 1].IsStarted = true;
         //Make sure that IsCompleted isn't true and you are on step 1.
         quests[id - 1].IsCompleted = false;
@@ -474,7 +485,13 @@ public class PlayerScript : MonoBehaviour
     //This function will deal with advancing to the next part of a quest.
     public void AdvanceQuest(int id)
     {
+        if (quests[id - 1].IsCompleted == true)
+        {
+            print("You've already completed this quest.");
+            return;
+        }
         print("Advancing a step in Quest with ID: " + id + " | Current step = " + quests[id - 1].CurrentPart + " | Going to step: " + (quests[id - 1].CurrentPart + 1));
+        StartCoroutine(OtherEventTextQuests("Advancing a step in Quest with name: " + quests[id - 1].name + " | ID = " + id + "."));
         //Make sure that you are still starting and not completing the quest. Then advance.
         quests[id - 1].IsStarted = true;
         quests[id - 1].IsCompleted = false;
@@ -484,12 +501,28 @@ public class PlayerScript : MonoBehaviour
     //This function will deal with completing quests.
     public void CompleteQuest(int id)
     {
+        if (quests[id - 1].IsCompleted == true)
+        {
+            print("You've already completed this quest.");
+            return;
+        }
         //Increase step by 1 for the final amount of steps. Make sure IsStarted is still true. Then make IsCompleted true and give rewards through the PlayerScript.
         quests[id - 1].CurrentPart++;
         quests[id - 1].IsStarted = true;
         quests[id - 1].IsCompleted = true;
         print("Completing Quest with ID: " + id + " | This quest took " + quests[id - 1].CurrentPart + " parts to complete.");
+        StartCoroutine(OtherEventTextQuests("Completed Quest with name: " + quests[id - 1].name + " | ID = " + id + "."));
         this.GainQuestRewards(id);
+    }
+
+    private IEnumerator OtherEventTextQuests(string text)
+    {
+        OtherEventsUI.transform.GetChild(1).GetComponent<Text>().text = text;
+        OtherEventsUI.transform.GetChild(2).GetComponent<Image>().sprite = QuestsIconSprite;
+        OtherEventsUI.SetActive(true);
+        yield return new WaitForSeconds(5);
+        OtherEventsUI.SetActive(false);
+        yield return null;
     }
 
     //This function is used to change the ItemID variable.

@@ -20,6 +20,7 @@ public class PlayerStats : MonoBehaviour {
 
     public void GainMoveConstructingExp(int ExpGained)
     {
+        PlayerScript playerScript = GetComponent<PlayerScript>();
         if (this.MoveConstructingLevel >= 50)
         {
             //Level is 50 or more! Not Gaining XP!
@@ -41,6 +42,7 @@ public class PlayerStats : MonoBehaviour {
             int LeftoverExp = this.MoveConstructingExp - ExpNeeded;
             print("LeftoverExp: " + LeftoverExp);
             this.MoveConstructingLevel += 1;
+            playerScript.StartOtherEventTexts("You have leveled up in MoveConstructing! Now level " + this.MoveConstructingLevel + "!", playerScript.MoveConstructingSprite);
             //Starting the function again!
             this.MoveConstructingExp = 0;
             //Making sure that I reset XP to try to fix a bug!
@@ -52,12 +54,14 @@ public class PlayerStats : MonoBehaviour {
             //XP is equal to ExpNeeded!
             this.MoveConstructingExp = 0;
             this.MoveConstructingLevel += 1;
+            playerScript.StartOtherEventTexts("You have leveled up in MoveConstructing! Now level " + this.MoveConstructingLevel + "!", playerScript.MoveConstructingSprite);
             return;
         } 
     }
 
     public void GainChemistryExp(int ExpGained)
     {
+        PlayerScript playerScript = GetComponent<PlayerScript>();
         if (this.ChemistryLevel >= 50)
         {
             //Level is 50 or more! Not Gaining XP!
@@ -79,6 +83,7 @@ public class PlayerStats : MonoBehaviour {
             int LeftoverExp = this.ChemistryExp - ExpNeeded;
             print("LeftoverExp: " + LeftoverExp);
             this.ChemistryLevel += 1;
+            playerScript.StartOtherEventTexts("You have leveled up in Chemistry! Now level " + this.MoveConstructingLevel + "!", playerScript.ChemistrySprite);
             //Starting the function again!
             this.ChemistryExp = 0;
             //Making sure that I reset XP to try to fix a bug!
@@ -91,6 +96,7 @@ public class PlayerStats : MonoBehaviour {
             //XP is equal to ExpNeeded!
             this.ChemistryExp = 0;
             this.ChemistryLevel += 1;
+            playerScript.StartOtherEventTexts("You have leveled up in Chemistry! Now level " + this.MoveConstructingLevel + "!", playerScript.ChemistrySprite);
             return;
         }
     }

@@ -971,7 +971,6 @@ public class BattleScript : MonoBehaviour {
         float HealthBoost = 0;
         if (currentActiveBattleBoosts.Count > 0)
         {
-            print("ACTUALLY HAS 1 THING!");
             for (int i = 0; i <= currentActiveBattleBoosts.Count - 1; i++)
             {
                 print("Current Boost is has SpeedBoost of: " + currentActiveBattleBoosts[i].SpeedBoost.ToString() + "; an Attack Boost of: " + currentActiveBattleBoosts[i].AttackBoost.ToString() + "; a Defence Boost of: " + currentActiveBattleBoosts[i].DefenceBoost.ToString() + "; and a Speed Boost of: " + currentActiveBattleBoosts[i].SpeedBoost.ToString());

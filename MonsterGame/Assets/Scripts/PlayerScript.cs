@@ -40,6 +40,8 @@ public class PlayerScript : MonoBehaviour
     public GameObject OtherEventsUI;
 
     public Sprite QuestsIconSprite;
+    public Sprite MoveConstructingSprite;
+    public Sprite ChemistrySprite;
 
     public Button ExitMoveConstructingUIButton;
     public Button ExitPlayerInventoryUIButton;
@@ -475,7 +477,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
         print("Starting Quest with ID: " + id);
-        StartCoroutine(OtherEventTextQuests("Started Quest: " + quests[id - 1].name + " | ID: " + id + "."));
+        StartCoroutine(OtherEventTexts("Started Quest: " + quests[id - 1].name + " | ID: " + id + ".", QuestsIconSprite));
         quests[id - 1].IsStarted = true;
         //Make sure that IsCompleted isn't true and you are on step 1.
         quests[id - 1].IsCompleted = false;
@@ -491,7 +493,7 @@ public class PlayerScript : MonoBehaviour
             return;
         }
         print("Advancing a step in Quest with ID: " + id + " | Current step = " + quests[id - 1].CurrentPart + " | Going to step: " + (quests[id - 1].CurrentPart + 1));
-        StartCoroutine(OtherEventTextQuests("Advancing a step in Quest with name: " + quests[id - 1].name + " | ID = " + id + "."));
+        StartCoroutine(OtherEventTexts("Advancing a step in Quest with name: " + quests[id - 1].name + " | ID = " + id + ".", QuestsIconSprite));
         //Make sure that you are still starting and not completing the quest. Then advance.
         quests[id - 1].IsStarted = true;
         quests[id - 1].IsCompleted = false;
@@ -511,14 +513,19 @@ public class PlayerScript : MonoBehaviour
         quests[id - 1].IsStarted = true;
         quests[id - 1].IsCompleted = true;
         print("Completing Quest with ID: " + id + " | This quest took " + quests[id - 1].CurrentPart + " parts to complete.");
-        StartCoroutine(OtherEventTextQuests("Completed Quest with name: " + quests[id - 1].name + " | ID = " + id + "."));
+        StartCoroutine(OtherEventTexts("Completed Quest with name: " + quests[id - 1].name + " | ID = " + id + ".", QuestsIconSprite));
         this.GainQuestRewards(id);
     }
 
-    private IEnumerator OtherEventTextQuests(string text)
+    public void StartOtherEventTexts(string text, Sprite sprite)
+    {
+        StartCoroutine(OtherEventTexts(text, sprite));
+    }
+
+    private IEnumerator OtherEventTexts(string text, Sprite sprite)
     {
         OtherEventsUI.transform.GetChild(1).GetComponent<Text>().text = text;
-        OtherEventsUI.transform.GetChild(2).GetComponent<Image>().sprite = QuestsIconSprite;
+        OtherEventsUI.transform.GetChild(2).GetComponent<Image>().sprite = sprite;
         OtherEventsUI.SetActive(true);
         yield return new WaitForSeconds(5);
         OtherEventsUI.SetActive(false);

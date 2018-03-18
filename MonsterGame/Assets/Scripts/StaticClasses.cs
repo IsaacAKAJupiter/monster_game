@@ -26,4 +26,5 @@ public class StaticClasses {
     public static GameObject WhoAreYouInDialogueWithGO = null;
     public static bool CharControllerVelocity = true;
     public static bool UIIsOpen = false;
+    public static bool IsInCutscene = false;
 }

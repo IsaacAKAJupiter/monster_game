@@ -20,6 +20,7 @@ TagManager:
   - DialogueTrigger
   - DoorOpen
   - LampTrigger
+  - CutsceneTrigger
   layers:
   - Default
   - TransparentFX

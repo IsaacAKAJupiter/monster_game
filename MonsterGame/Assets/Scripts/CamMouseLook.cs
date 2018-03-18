@@ -18,7 +18,7 @@ public class CamMouseLook : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (StaticClasses.IsInBattle == false && StaticClasses.IsGamePaused == false && StaticClasses.IsInDialogue == false && StaticClasses.UIIsOpen == false)
+        if (StaticClasses.IsInBattle == false && StaticClasses.IsGamePaused == false && StaticClasses.IsInDialogue == false && StaticClasses.UIIsOpen == false && StaticClasses.IsInCutscene == false)
         {
             var MouseDirection = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 

@@ -136,7 +136,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         //Dealing with the pressing of a keyboard key when inside an Interactable.
-        if (StaticClasses.IsInteractable == true && StaticClasses.IsInBattle == false && StaticClasses.IsGamePaused == false && StaticClasses.IsInDialogue == false)
+        if (StaticClasses.IsInteractable == true && StaticClasses.IsInBattle == false && StaticClasses.IsGamePaused == false && StaticClasses.IsInDialogue == false && StaticClasses.IsInCutscene == false)
         {
             if (Input.GetKeyDown(StaticClasses.InteractableButton))
             {
@@ -181,6 +181,20 @@ public class PlayerScript : MonoBehaviour
                     {
                         LampOn.SetActive(true);
                     }
+                } else if (StaticClasses.WhatInteractableItem == "CutsceneTrigger")
+                {
+                    GameObject Node = StaticClasses.WhatInteractableItemGO.transform.parent.gameObject;
+                    CutsceneEvent cutsceneEvent = Node.GetComponent<CutsceneEvent>();
+                    switch (Node.transform.parent.name)
+                    {
+                        case "TestCutscene":
+                            cutsceneEvent.TestCutsceneCoroutine(1);
+                            break;
+                        default:
+                            print("Not an actual cutscene.");
+                            break;
+                    }
+                    InteractableUI.SetActive(false);
                 }
             }
         }
@@ -189,7 +203,7 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(StaticClasses.InventoryButton))
         {
             //Checking if any other UI is open, game is paused, in dialogue, or in battle.
-            if (StaticClasses.IsInBattle == true || StaticClasses.IsGamePaused == true || StaticClasses.IsInDialogue == true || StaticClasses.UIIsOpen == true)
+            if (StaticClasses.IsInBattle == true || StaticClasses.IsGamePaused == true || StaticClasses.IsInDialogue == true || StaticClasses.UIIsOpen == true && StaticClasses.IsInCutscene == false)
             {
                 return;
             }
@@ -217,7 +231,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         //Dealing with the movement of the character controller.
-        if (StaticClasses.IsInBattle == false && StaticClasses.IsGamePaused == false && StaticClasses.IsInDialogue == false && StaticClasses.UIIsOpen == false)
+        if (StaticClasses.IsInBattle == false && StaticClasses.IsGamePaused == false && StaticClasses.IsInDialogue == false && StaticClasses.UIIsOpen == false && StaticClasses.IsInCutscene == false)
         {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveDirection = transform.GetChild(0).transform.TransformDirection(moveDirection);
@@ -256,7 +270,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         //Dealing with the user pressing the pause button (usually escape) while playing.
-        if (Input.GetKeyDown(StaticClasses.PauseButton) && StaticClasses.IsInBattle == false)
+        if (Input.GetKeyDown(StaticClasses.PauseButton) && StaticClasses.IsInBattle == false && StaticClasses.IsInCutscene == false)
         {
             if (StaticClasses.IsGamePaused == false)
             {

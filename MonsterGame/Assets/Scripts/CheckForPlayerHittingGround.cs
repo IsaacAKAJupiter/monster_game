@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class CheckForPlayerHittingGround : MonoBehaviour {
 
-    private CharacterController charController;
     private CurrentMonsterOnPlayer currentMonsterOnPlayer;
     private PlayerStats playerStats;
     private PlayerScript playerScript;
@@ -13,7 +12,6 @@ public class CheckForPlayerHittingGround : MonoBehaviour {
 
     private void Awake()
     {
-        charController = GetComponent<CharacterController>();
         playerStats = this.transform.parent.GetComponent<PlayerStats>();
         playerScript = this.transform.parent.GetComponent<PlayerScript>();
         currentMonsterOnPlayer = this.transform.parent.GetComponent<CurrentMonsterOnPlayer>();

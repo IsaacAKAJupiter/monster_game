@@ -5,7 +5,7 @@ I haven't come up with a name with this project yet, this is just to mainly expa
 ## About
 
 * It's inspired by Pokemon, with my spin on it (Not using any code/formulas from the original).
-* Completely coded from scratch in Unity, special thanks to [Apex](https://twitter.com/RL_Apex) for helping with some formulas.
+* Completely coded from scratch in Unity, special thanks to [Apex](https://twitter.com/RL_Apex) and [Josh](https://twitter.com/j0shht) for helping with some formulas.
 * Exploring/Leveling/Battling/RPG based game.
 * Quest system (In works)
 * Minigame system (In works)

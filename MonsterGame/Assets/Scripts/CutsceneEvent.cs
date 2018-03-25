@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CutsceneLerps
+{
+    slowfastslow, fastslowfast, fastslow, slowfast, normal
+}
+
 public class CutsceneEvent : MonoBehaviour {
 
     public GameObject player;
@@ -40,7 +45,7 @@ public class CutsceneEvent : MonoBehaviour {
                 print("node 2");
                 mainCamera.transform.position = TestCutsceneObject.transform.GetChild(0).transform.position;
                 IsRotateAndMoveCamera = true;
-                StartCoroutine(RotateAndMoveGameObject(mainCamera.gameObject, mainCamera.transform.position, TestCutsceneObject.transform.GetChild(1).transform.position, 0.004f, Vector3.zero, new Vector3(20.0f, 0.0f, 0.0f), 1.0f, 4));
+                StartCoroutine(RotateAndMoveGameObject(mainCamera.gameObject, mainCamera.transform.position, TestCutsceneObject.transform.GetChild(1).transform.position, 0.004f, Vector3.zero, new Vector3(20.0f, 0.0f, 0.0f), 1.0f, CutsceneLerps.normal));
                 yield return new WaitUntil(() => IsRotateAndMoveCamera == false);
                 //Make sure it's at the correct position.
                 mainCamera.transform.rotation = Quaternion.Euler(new Vector3(20.0f, 0.0f, 0.0f));
@@ -63,7 +68,7 @@ public class CutsceneEvent : MonoBehaviour {
         yield return null;
     }
 
-    private IEnumerator RotateAndMoveGameObject(GameObject gameObject, Vector3 OriginalPosition, Vector3 FinalPosition, float Speed, Vector3 OriginalRotation, Vector3 FinalRotation, float RotationSpeed, int WhichLerp)
+    private IEnumerator RotateAndMoveGameObject(GameObject gameObject, Vector3 OriginalPosition, Vector3 FinalPosition, float Speed, Vector3 OriginalRotation, Vector3 FinalRotation, float RotationSpeed, CutsceneLerps WhichLerp)
     {
         Vector3 rotationVector = Vector3.zero;
         for (float i = 0.0f; i <= 1.0f; i += Speed)
@@ -84,24 +89,23 @@ public class CutsceneEvent : MonoBehaviour {
         yield return null;
     }
 
-    public void SmoothLerp(GameObject gobject, Vector3 start, Vector3 goal, float alpha, int WhichTween)
+    public void SmoothLerp(GameObject gobject, Vector3 start, Vector3 goal, float alpha, CutsceneLerps WhichLerp)
     {
-        if (WhichTween == 1)
+        if (WhichLerp == CutsceneLerps.slowfastslow)
         {
-            //SlowFastSlow
             gobject.transform.position = Vector3.Lerp(start, goal, 0.5f * Mathf.Sin(Mathf.PI * alpha - Mathf.PI / 2.0f) + 0.5f);
-        } else if (WhichTween == 2)
+        } else if (WhichLerp == CutsceneLerps.fastslow)
         {
-            //FastSlow
             gobject.transform.position = Vector3.Lerp(start, goal, Mathf.Sin(0.5f * Mathf.PI * alpha));
-        } else if (WhichTween == 3)
+        } else if (WhichLerp == CutsceneLerps.slowfast)
         {
-            //SlowFast
             gobject.transform.position = Vector3.Lerp(start, goal, Mathf.Sin(0.5f * (Mathf.PI * alpha - Mathf.PI)) + 1.0f);
-        } else if (WhichTween == 4)
+        } else if (WhichLerp == CutsceneLerps.fastslowfast)
         {
-            //FastSlowFast
             gobject.transform.position = Vector3.Lerp(start, goal, (1.0f / Mathf.PI) * Mathf.Asin(2.0f * alpha - 1.0f) + 0.5f);
+        } else if (WhichLerp == CutsceneLerps.normal)
+        {
+            gobject.transform.position = Vector3.Lerp(start, goal, alpha);
         }
     }
 }

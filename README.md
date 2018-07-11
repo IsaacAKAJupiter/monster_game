@@ -19,6 +19,6 @@ This is my first game that I really worked on in Unity other than the [Roll a Ba
 ## Social Media/Contact
 [Personal Discord](https://discord.gg/JnB6xtg)
 
-[Personal Twitter](https://twitter.com/JupiterRL)
+[Personal Twitter](https://twitter.com/JupsTV)
 
-[Website](http://www.isaac.jmtstudios.org/) (Thanks to [Josh](https://twitter.com/j0shht) for letting me use part of his website <3)
+[Website](http://jups.xyz/)

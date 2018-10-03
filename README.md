@@ -1,6 +1,6 @@
 # Monster Game [![Unity](https://img.shields.io/badge/type-unity--game-orange.svg)](https://unity3d.com/)
 
-I haven't come up with a name with this project yet, this is just to mainly expand my knowlegde with C#, Unity, game creation, etc.
+I haven't come up with a name with this project yet, this is just to mainly expand my knowledge with C#, Unity, game creation, etc.
 
 ## About
 
@@ -10,7 +10,7 @@ I haven't come up with a name with this project yet, this is just to mainly expa
 * Quest system (In works)
 * Minigame system (In works)
 * All models (unless specified otherwise) created in [MagicaVoxel](https://ephtracy.github.io/).
-* Animations either done in Unity or [Mixamo](https://www.mixamo.com).
+* Animations either done in [Unity](https://unity3d.com/) or [Mixamo](https://www.mixamo.com).
 
 ## Note
 

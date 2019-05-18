@@ -21,4 +21,4 @@ This is my first game that I really worked on in Unity other than the [Roll a Ba
 
 [Personal Twitter](https://twitter.com/JupsTV)
 
-[Website](http://jups.xyz/)
+[Website](https://www.isaacoram.ca)
